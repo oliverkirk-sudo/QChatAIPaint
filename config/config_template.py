@@ -1,0 +1,21 @@
+default_config = {
+    'open': True,
+    'user_resize': False,
+    'gen_limit': True,
+    'negative_prompt': 'nsfw',
+    'model': 'Vibrance',
+    'width': '512',
+    'height': '512',
+    'steps': '30',
+    'cfg_scale': '7',
+    'strength': '60',
+    'history': 'true',
+    'random_autogen': 'false',
+    'variations_autogen': 'true',
+    'quality_tags': 'true',
+    'num_images': '1',
+    'skip': '2',
+    'continuous_mode': 'off',
+    'sessionid': '',
+    'holara_r': ''
+}
