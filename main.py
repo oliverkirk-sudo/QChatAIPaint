@@ -4,8 +4,8 @@ import random
 
 from pkg.plugin.models import *
 from pkg.plugin.host import EventContext, PluginHost
-from plugins.aipaint.config.config import default_config
-from plugins.aipaint.pkg.holara import gen_img
+from plugins.QChatAIPaint.config.config import default_config
+from plugins.QChatAIPaint.pkg.holara import gen_img
 from mirai import Image, Plain
 
 
@@ -131,21 +131,21 @@ class HelloPlugin(Plugin):
     @on(GroupNormalMessageReceived)
     def normal_message_received(self, event: EventContext, **kwargs):
         msg: str = kwargs["text_message"].strip()
-        if msg.startswith("aipaint"):
+        if msg.startswith("QChatAIPaint"):
             if not default_config["open"]:
                 event.add_return("reply", ["ai绘画功能未开启"])
             elif default_config["sessionid"] == "" or default_config["holara_r"] == "":
                 event.add_return("reply", ["请设置sessionid与holara_r"])
             else:
                 logging.debug("{}使用了ai绘画工具".format(kwargs["sender_id"]))
-                if msg.replace("aipaint", "").strip() in ["随机图片", "随机生成", "随机"]:
+                if msg.replace("QChatAIPaint", "").strip() in ["随机图片", "随机生成", "随机"]:
                     send_msg(kwargs, ["图片生成中，请稍候"])
                     images, remain, generation_cost = default_random_gen()
                     msg_list = response_process(images, remain, generation_cost)
                     logging.debug("{}使用了随机图片生成".format(kwargs["sender_id"]))
-                elif "条件随机" in msg.replace("aipaint", "").strip():
+                elif "条件随机" in msg.replace("QChatAIPaint", "").strip():
                     con_list = (
-                        msg.replace("aipaint", "")
+                        msg.replace("QChatAIPaint", "")
                         .replace("条件随机", "")
                         .strip()
                         .split("?")
@@ -154,9 +154,9 @@ class HelloPlugin(Plugin):
                     images, remain, generation_cost = condition_random_gen(con_list)
                     msg_list = response_process(images, remain, generation_cost)
                     logging.debug("{}使用了条件随机生成".format(kwargs["sender_id"]))
-                elif "默认生成" in msg.replace("aipaint", "").strip():
+                elif "默认生成" in msg.replace("QChatAIPaint", "").strip():
                     con_list = (
-                        msg.replace("aipaint", "")
+                        msg.replace("QChatAIPaint", "")
                         .replace("默认生成", "")
                         .strip()
                         .split("?")
@@ -165,9 +165,9 @@ class HelloPlugin(Plugin):
                     images, remain, generation_cost = default_condition_gen(con_list)
                     msg_list = response_process(images, remain, generation_cost)
                     logging.debug("{}使用了默认配置图片生成".format(kwargs["sender_id"]))
-                elif "条件生成" in msg.replace("aipaint", "").strip():
+                elif "条件生成" in msg.replace("QChatAIPaint", "").strip():
                     con_list = (
-                        msg.replace("aipaint", "")
+                        msg.replace("QChatAIPaint", "")
                         .replace("条件生成", "")
                         .strip()
                         .split("?")
@@ -187,9 +187,9 @@ class HelloPlugin(Plugin):
     def normal_message_received(self, event: EventContext, **kwargs):
         command = kwargs["command"]
         params = kwargs["params"]
-        if command == "aipaint":
+        if command == "QChatAIPaint":
             if params[0] == "help":
-                help_str = """欢迎使用ai绘图工具，本工具基于https://holara.ai/网站逆向爬虫\n绘图功能分为：\n1. 随机图片生成：【aipaint随机图片】或【aipaint随机】或【aipaint随机生成】\n2. 条件随机图片生成：【aipaint条件随机model?width?height?steps?cfg_scale?num_images】\n3. 默认配置条件生成：【aipaint默认生成tag?ntag】\n4. 条件图片生成：【aipaint条件生成tag?ntag?model?width?height?steps?cfg_scale?num_images】\n其中，model包含：\n1、Vibrance #Vibrant and bright\n2、Chroma #Inspired by ghostmix/AOM3\n3、Aika #Holara's aesthetic model\n4、Tranquility #Inspired by counterfeit3\n5、Lucid #Realistic and smooth\n6、Furry #Anthropomorphic furry model\n7、Akasha #Holara's traditional model\n8、Yami #Holara's alternative model\n管理员功能为：\n!aipaint on 开启ai绘画功能\n!aipaint off 关闭ai绘画功能\n!aipaint set user_resize <true/false> 是否允许用户设置图片大小\n!aipaint set gen_limit <true/false> 是否开启生成数量限制\n#该软件仅供学习交流，一切由该软件产生的不良影响由使用者承担#\n最后更新日期：2023年8月10日"""
+                help_str = """欢迎使用ai绘图工具，本工具基于https://holara.ai/网站逆向爬虫\n绘图功能分为：\n1. 随机图片生成：【aipaint随机图片】或【aipaint随机】或【aipaint随机生成】\n2. 条件随机图片生成：【aipaint条件随机model?width?height?steps?cfg_scale?num_images】\n3. 默认配置条件生成：【aipaint默认生成tag?ntag】\n4. 条件图片生成：【aipaint条件生成tag?ntag?model?width?height?steps?cfg_scale?num_images】\n其中，model包含：\n1、Vibrance #Vibrant and bright\n2、Chroma #Inspired by ghostmix/AOM3\n3、Aika #Holara's aesthetic model\n4、Tranquility #Inspired by counterfeit3\n5、Lucid #Realistic and smooth\n6、Furry #Anthropomorphic furry model\n7、Akasha #Holara's traditional model\n8、Yami #Holara's alternative model\n管理员功能为：\n!QChatAIPaint on 开启ai绘画功能\n!QChatAIPaint off 关闭ai绘画功能\n!QChatAIPaint set user_resize <true/false> 是否允许用户设置图片大小\n!QChatAIPaint set gen_limit <true/false> 是否开启生成数量限制\n#该软件仅供学习交流，一切由该软件产生的不良影响由使用者承担#\n最后更新日期：2023年8月10日"""
                 event.add_return("reply", [help_str])
             if kwargs["is_admin"]:
                 if params[0] == "on":

@@ -2,7 +2,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from plugins.aipaint.config.config import default_config
+from plugins.QChatAIPaint.config.config import default_config
 
 session = requests.session()
 
