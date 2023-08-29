@@ -110,8 +110,8 @@ def send_msg(kwargs, msg):
 
 
 # 注册插件
-@register(name="QChatAIPaint", description="ai绘画", version="0.2", author="oliverkirk-sudo")
-class HelloPlugin(Plugin):
+@register(name="QChatAIPaint", description="ai绘画", version="0.3", author="oliverkirk-sudo")
+class QChatAIPaintPlugin(Plugin):
 
     # 插件加载时触发
     # plugin_host (pkg.plugin.host.PluginHost) 提供了与主程序交互的一些方法，详细请查看其源码
